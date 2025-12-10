@@ -1,7 +1,9 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
+CORS(app)  # Autorise toutes les requêtes cross-origin
 
 @app.route("/getfact")
 def getfact():
