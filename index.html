@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Accueil Général</title>
-  </head>
-  <body>
-    <h1>Cliquez pour avoir une anecdote sur les chats :</h1>
-    <br>
-    <button onclick="window.location.href='https://catfact.ninja/fact';">
-      Aller sur le site
-    </button>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Fact</title>
+</head>
+<body>
+
+<h2>Fait sur les chats</h2>
+
+<button onclick="loadFact()">Clique sur le bouton pour obtenir un fun fact sur les chats !</button>
+
+<p id="fact"></p>
+
+<script>
+function loadFact() {
+    fetch("http://127.0.0.1:5000/getfact")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("fact").textContent = data.fact;
+        })
+        .catch(err => {
+            document.getElementById("fact").textContent = "Erreur : " + err;
+        });
+}
+</script>
+
+</body>
 </html>
