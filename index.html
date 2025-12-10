@@ -8,8 +8,19 @@
   <body>
     <h1>Cliquez pour avoir une anecdote sur les chats :</h1>
     <br>
-    <button onclick="window.location.href='https://catfact.ninja/fact';">
-      Aller sur le site
-    </button>
+    <button onclick="getCatFact()">Obtenir un fait</button>
+
+    <script>
+        function getCatFact() {
+            fetch("https://catfact.ninja/fact")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("resultat").textContent = data.fact;
+                })
+                .catch(error => {
+                    document.getElementById("resultat").textContent = "Erreur : " + error;
+                });
+        }
+    </script>
   </body>
 </html>
