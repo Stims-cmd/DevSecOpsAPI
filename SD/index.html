@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Pokémon</title>
+</head>
+<body>
+    <h1>Choisis ton Pokémon !</h1>
+
+    <input type="text" id="pokemonName" placeholder="Ex : pikachu">
+    <button onclick="getPokemon()">Obtenir Pokémon</button>
+
+    <h2 id="name"></h2>
+    <img id="sprite" src="" alt="" style="display:none;">
+    <ul id="stats"></ul>
+
+    <script>
+        function getPokemon() {
+            const name = document.getElementById("pokemonName").value;
+            fetch(`http://127.0.0.1:5000/pokemon/${name}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("name").textContent = data.error;
+                        document.getElementById("sprite").style.display = "none";
+                        document.getElementById("stats").innerHTML = "";
+                        return;
+                    }
+
+                    document.getElementById("name").textContent = data.name;
+
+                    const sprite = document.getElementById("sprite");
+                    sprite.src = data.sprite;
+                    sprite.style.display = "block";
+
+                    const stats = document.getElementById("stats");
+                    stats.innerHTML = "";
+                    for (const [stat, value] of Object.entries(data.stats)) {
+                        const li = document.createElement("li");
+                        li.textContent = `${stat}: ${value}`;
+                        stats.appendChild(li);
+                    }
+                })
+                .catch(err => {
+                    document.getElementById("name").textContent = "Erreur : " + err;
+                });
+        }
+    </script>
+</body>
+</html>
