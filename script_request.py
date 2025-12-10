@@ -1,8 +1,10 @@
 
 from flask import Flask, jsonify
+from flask_cors import CORS
 import requests as rq
 
 app= Flask(__name__)
+CORS(app)
 
 @app.route("/catfact")
 
