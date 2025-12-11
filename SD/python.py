@@ -15,12 +15,27 @@ def get_pokemon(name):
 
     data = response.json()
 
-    # On récupère seulement ce qui nous intéresse
+    # 1. Récupérer le nom du Pokémon
+    pokemon_name = data["name"].capitalize()
+
+    # 2. Récupérer les statistiques
+    pokemon_stats = {}
+    for stat in data["stats"]:
+        stat_name = stat["stat"]["name"]       
+        stat_value = stat["base_stat"]         
+        pokemon_stats[stat_name] = stat_value  
+
+    # 3. Récupérer l'URL du sprite
+    pokemon_sprite = data["sprites"]["front_default"]
+
+    # 4. Construire le résultat final
     result = {
-        "name": data["name"].capitalize(),
-        "stats": {stat["stat"]["name"]: stat["base_stat"] for stat in data["stats"]},
-        "sprite": data["sprites"]["front_default"]
+        "name": pokemon_name,
+        "stats": pokemon_stats,
+        "sprite": pokemon_sprite
     }
+
+    # 5. Retour au frontend
     return jsonify(result)
 
 if __name__ == "__main__":
