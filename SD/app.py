@@ -1,9 +1,13 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
 CORS(app)  # Autorise le frontend à faire des requêtes
+
+@app.route("/")
+def home():
+    return send_file("index.html")
 
 @app.route("/pokemon/<name>")
 def get_pokemon(name):
